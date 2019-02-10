@@ -1,0 +1,33 @@
+% film (_id, name, producer, date(year, month, day), notation) %
+% actor (_id, name, grade, birth, work) %
+% filmed (_id, f_id, a_id, role, notation) %
+
+film(1, source_code, mark_gordon, (11, 3, 2011), science_fiction_thriller).
+film(2, avatar, james_cameron, (15, 4, 2009), fantastic_action).
+film(3, de_javu, tony_scott, (22, 11, 2006), action_thriller).
+film(4, godfather, frensis_ford, (14, 3, 1972), gangster_drama).
+film(5, focus, glenn_fikarra, (26, 2, 2015), criminal_tragocomedy).
+
+actor(101, margo_robi,actor, (2, 7, 1990), abc).
+actor(102, al_pachino, actor_producer, (25, 4, 1940), new_york_actor_studio).
+actor(103, jake_gyllenhaal, actor, (19, 12, 1980), bafta).
+actor(104, denzel_washington, actor_producer, (28, 12, 1954), oscar).
+actor(105, zoi_saldana, actor, (19, 6, 1978), colimbiana).
+
+filmed(f1, 1, 101, first, girl_of_main_character).
+filmed(f2, 2, 102, first, killer).
+filmed(f3, 3, 103, second, trackdriver).
+filmed(f4, 2, 104, first, president).
+filmed(f5, 4, 105, second, baker).
+
+film_actor(Actor, Film):- filmed(_, F_I, A_I, _, _), actor(A_I, Actor, _, _, _), film(F_I, Film, _, _, _).
+role_actor(Role, Actor) :- filmed(_, _, A_I, Role, _), actor(A_I, Actor, _, _, _).
+role_birth_year(Role, Byear) :- filmed(_, _, A_I, Role, _), actor(A_I, _, _, (Byear, _, _), _).
+genre_prime(Genre, Prime) :- filmed(_, F_I, A_I, _, _), film(F_I, _, _, _, Genre), actor(A_I, _, _, _, Prime).
+actor_producer(Actor, Producer) :- filmed(_, F_I, A_I, _, _), film(F_I, _, Producer, _, _), actor(A_I, Actor, _, _, _).
+
+%? - film_actor(margo_robi, X).%
+%? - role_actor(first, X).%
+%? - role_birth_year(Role, Year).%
+%? - genre_prime(Genre, Prime).%
+%? - actor_producer(Actor, james_cameron).%
